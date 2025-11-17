@@ -1,152 +1,114 @@
-🚀 Automated Social Media Content Pipeline (n8n Workflow)
+# Automated Social Media Content Pipeline (n8n Workflow)
 
-This repository contains an n8n automation workflow that fully automates the process of:
+This repository provides a fully automated content creation and publishing pipeline built using **n8n**. The workflow generates post ideas, creates matching AI media, publishes content to multiple social platforms, and logs all generated data for future tracking.
 
-Generating social media post ideas
+## Overview
 
-Creating matching AI images and videos
+The workflow orchestrates a complete end-to-end automation process, integrating AI models, social media APIs, and Google Sheets. It is designed for creators, marketers, and automation engineers seeking a hands-free publishing system.
 
-Publishing content to Instagram, Facebook, and TikTok
+## Features
 
-Saving all generated content to Google Sheets for tracking
+### 1. AI-Generated Post Ideas
 
-This workflow uses Google Gemini, Facebook Graph API, TikTok API, and Google Sheets.
+The workflow uses Google Gemini to produce structured JSON containing:
 
-📌 Features
-✅ 1. AI-Generated Post Ideas
+* A short content idea
+* An image prompt
+* A 50–80 word caption
+* Ten hashtags
 
-The workflow generates:
+### 2. AI Media Creation
 
-A short creative idea
+Utilizing Google Gemini (Imagen and Veo models), the workflow automatically generates:
 
-An image prompt
+* An image suitable for Instagram and Facebook
+* A short video suitable for TikTok
 
-A 50–80 word caption
+### 3. Automated Social Media Publishing
 
-10 hashtags
-All formatted in JSON.
+The workflow publishes generated content directly to:
 
-✅ 2. AI Image & Video Generation
+* Instagram
+* Facebook Groups
+* TikTok
 
-Uses Google Gemini (Imagen & Veo models) to create:
+### 4. Google Sheets Caching
 
-An image for Instagram & Facebook
+All generated content is saved to Google Sheets, including:
 
-A TikTok-ready short video
+* Idea
+* Caption
+* Hashtags
+* Image URL
+* Video URL
+* Timestamp
 
-✅ 3. Social Media Automation
+This ensures proper tracking and helps prevent duplicate posts.
 
-Posts are automatically created and published on:
+## Workflow Summary
 
-Instagram
+A simplified flow of how the automation operates:
 
-Facebook Groups
+1. Manual Trigger: Executes the workflow on demand.
+2. Content Generation: Calls Gemini to produce structured JSON output.
+3. JSON Parsing: Extracts fields and formats them for downstream nodes.
+4. Image Generation: Calls Imagen to return an image URL.
+5. Video Generation: Uses Veo to produce a video URL.
+6. Social Media Posting: Uploads and publishes content across Instagram, Facebook, and TikTok.
+7. Data Structuring: Prepares a final JSON object for storage.
+8. Google Sheets Logging: Saves all important fields for later reference.
 
-TikTok
+## Technologies Used
 
-✅ 4. Google Sheets Caching
+| Component             | Purpose                              |
+| --------------------- | ------------------------------------ |
+| n8n                   | Automation engine                    |
+| Google Gemini (PaLM)  | Content, image, and video generation |
+| Instagram Graph API   | Image publishing                     |
+| Facebook Graph API    | Content posting                      |
+| TikTok API            | Video uploads                        |
+| Google Sheets API     | Post history caching                 |
+| JavaScript Code Nodes | JSON parsing and data shaping        |
 
-Every generated post is saved in a spreadsheet:
+## File Structure
 
-Idea
-
-Caption
-
-Hashtags
-
-Image URL
-
-Video URL
-
-Timestamp
-
-This helps you track previous posts and avoid duplicates.
-
-🧩 Workflow Overview
-
-Below is a simplified version of how the workflow operates:
-
-Manual Trigger
-Starts the workflow when you press “Execute Workflow”.
-
-Generate Post Content
-Calls Gemini → returns JSON with idea, caption, imagePrompt, hashtags.
-
-Parse JSON Output
-Extracts text and converts it into structured fields.
-
-Generate Image
-Uses Imagen 4.0 → returns imageUrl.
-
-Generate Video
-Uses Veo 3.0 → returns videoUrl.
-
-Post to Social Media
-
-Instagram upload + publish
-
-Facebook post with caption & image
-
-TikTok video upload
-
-Structure Data
-Prepares a clean JSON object for caching.
-
-Save to Google Sheets
-Stores all useful fields for later use.
-
-🛠️ Technologies Used
-Component	Used For
-n8n	Automation engine
-Google Gemini (PaLM)	Content, images, and video generation
-Instagram Graph API	Image posting
-Facebook Graph API	Facebook feed posting
-TikTok API	Video uploads
-Google Sheets	Post history caching
-JavaScript Code Nodes	JSON parsing & data structuring
-File Structure
+```
 /
-├── social_media_autp_n8n.json
+├── social_media_automation_n8n.json
 ├── image.png
+```
 
-Setup Instructions
-1. Import Workflow
+## Setup Instructions
 
-Open n8n → Workflows
+### 1. Import the Workflow
 
-Click Import from File
+1. Open n8n and navigate to *Workflows*.
+2. Select *Import from File*.
+3. Choose the provided JSON file.
 
-Select workflow.json
+### 2. Configure Required Credentials
 
-2. Add Required Credentials
+Set up the following credentials in n8n:
 
-You must configure:
+* Google Gemini (PaLM / Gemini API)
+* Instagram and Facebook HTTP Bearer Authentication
+* TikTok HTTP Bearer Authentication
+* Google Sheets OAuth2
 
-Service	Credential Type
-Google Gemini	Google PaLM / Gemini API
-Instagram / Facebook	HTTP Bearer Auth
-TikTok API	HTTP Bearer Auth
-Google Sheets	Google OAuth2
-3. Replace Placeholder Values
+### 3. Replace Placeholder Values
 
-Replace:
+Update the workflow with your actual identifiers:
 
-PLACEHOLDER_IG_USER_ID
+* `PLACEHOLDER_IG_USER_ID`
+* `PLACEHOLDER_GROUP_ID`
 
-PLACEHOLDER_GROUP_ID
+### 4. Running the Workflow
 
-with your actual Facebook/Instagram IDs.
+Once configured, click **Execute Workflow**. The system will:
 
-▶️ Running the Workflow
+* Generate a post idea
+* Create an image and video
+* Publish to all configured platforms
+* Save all generated content to Google Sheets
 
-Just click Execute Workflow and the pipeline will:
-
-Generate post idea
-
-Create images & videos
-
-Publish them
-
-Save everything to Google Sheets
-
-Your content is fully automated 🎉
+This provides a complete and automated content production pipeline, requiring no manual intervention once active.
